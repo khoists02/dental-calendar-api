@@ -48,6 +48,18 @@ import {
 } from "./controller/calendar.controller";
 import { inviteUserGroupsSchema } from "./schema/user_group.schema";
 import { invitedUserGroupHandler } from "./controller/user_group.controller";
+import {
+  createPatientSchema,
+  deletePatientSchema,
+  updatePatientSchema,
+} from "./schema/patient.schema";
+import {
+  createPatientHandler,
+  deletePatientHandler,
+  getPatientHandler,
+  getPatientsHandler,
+  updatePatientHandler,
+} from "./controller/patient.controller";
 
 export default function (app: Express) {
   app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
@@ -162,5 +174,33 @@ export default function (app: Express) {
     "/api/userGroups/:groupId",
     [requiresUser, validateRequest(inviteUserGroupsSchema)],
     invitedUserGroupHandler
+  );
+
+  // patient routes
+
+  app.post(
+    "/api/patients",
+    [requiresUser, validateRequest(createPatientSchema)],
+    createPatientHandler
+  );
+
+  // Get all patient
+  app.get("/api/patients", requiresUser, getPatientsHandler);
+
+  // Update a patient
+  app.put(
+    "/api/patients/:patientId",
+    [requiresUser, validateRequest(updatePatientSchema)],
+    updatePatientHandler
+  );
+
+  // Get a patient
+  app.get("/api/patients/:patientId", requiresUser, getPatientHandler);
+
+  // Delete a patient
+  app.delete(
+    "/api/patients/:patientId",
+    [requiresUser, validateRequest(deletePatientSchema)],
+    deletePatientHandler
   );
 }
