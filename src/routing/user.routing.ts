@@ -4,7 +4,10 @@ import {
   getUserSessionsHandler,
   invalidateUserSessionHandler,
 } from "../controller/session.controller";
-import { createUserHandler } from "../controller/user.controller";
+import {
+  authenticatedUserHandler,
+  createUserHandler,
+} from "../controller/user.controller";
 import { requiresUser, validateRequest } from "../middleware";
 import {
   createUserSchema,
@@ -19,10 +22,13 @@ const UserRoute = (app: Express) => {
 
   // Login
   app.post(
-    "/api/sessions",
+    "/api/authenticate",
     validateRequest(createUserSessionSchema),
     createUserSessionHandler
   );
+
+  // authenticatedUser
+  app.get("/api/authenticatedUser", requiresUser, authenticatedUserHandler);
 
   // Get the user's sessions
   app.get("/api/sessions", requiresUser, getUserSessionsHandler);

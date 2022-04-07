@@ -41,6 +41,7 @@ export async function invalidateUserSessionHandler(
   res: Response
 ) {
   const sessionId = get(req, "user.session");
+  console.log({ sessionId });
 
   await updateSession({ _id: sessionId }, { valid: false });
 

@@ -88,7 +88,6 @@ export async function deleteGroupHandler(req: Request, res: Response) {
 
 export async function getGroupsHandler(req: Request, res: Response) {
   const userId = get(req, "user._id");
-
   const groups = await findGroups({ user: userId, valid: true });
 
   return res.send(groups);
