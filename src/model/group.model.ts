@@ -23,7 +23,7 @@ const GroupSchema = new mongoose.Schema(
       default: () => nanoid(10),
     },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    groupName: { type: String },
+    groupName: { type: String, required: true, unique: true },
     active: { type: Boolean, default: false },
     status: { type: String, default: "TRIAL" },
     expiredAt: { type: String },

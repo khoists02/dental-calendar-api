@@ -116,7 +116,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"status\": \"TRIAL\",\r\n    \"groupName\": \"Phuonghoang dental\",\r\n    \"active\": false,\r\n    \"number\": 2,\r\n    \"expiredAt\": \"2022-10-02T10:00:00\"\r\n}",
+							"raw": "{\r\n    \"status\": \"TRIAL\",\r\n    \"groupName\": \"Phuonghoang Dental\",\r\n    \"active\": false,\r\n    \"number\": 2,\r\n    \"expiredAt\": \"2022-10-02T10:00:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -124,13 +124,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{uri}}/groups/E4-DZMbVUu",
+							"raw": "{{uri}}/groups/nuB6572Wjh",
 							"host": [
 								"{{uri}}"
 							],
 							"path": [
 								"groups",
-								"E4-DZMbVUu"
+								"nuB6572Wjh"
 							]
 						}
 					},
@@ -248,6 +248,16 @@
 				{
 					"name": "Delete Session",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [
 							{
@@ -319,6 +329,9 @@
 				{
 					"name": "Create User",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -337,6 +350,310 @@
 							],
 							"path": [
 								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Patients",
+			"item": [
+				{
+					"name": "Get Patients",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{uri}}/patients",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Patient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{uri}}/patients/:patienId",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"patients",
+								":patienId"
+							],
+							"variable": [
+								{
+									"key": "patienId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create patient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"patientName\": \"Name\",\r\n    \"patientPhone\": \"0983232323\",\r\n    \"patientDob\": \"\",\r\n    \"refererDoctor\": \"\",\r\n    \"calendarIds\": [\"\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{uri}}/patients",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Patient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"patientName\": \"\",\r\n    \"patientPhone\": \"\",\r\n    \"patientDob\": \"\",\r\n    \"refererDoctor\": \"\",\r\n    \"calendarIds\": [\"\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{uri}}/patients/:patienId",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"patients",
+								":patienId"
+							],
+							"variable": [
+								{
+									"key": "patienId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{uri}}/patients/:patienId",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"patients",
+								":patienId"
+							],
+							"variable": [
+								{
+									"key": "patienId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Calendar",
+			"item": [
+				{
+					"name": "Get Calendars",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{uri}}/calendars/624e5fe6249558adcfadcacf",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"calendars",
+								"624e5fe6249558adcfadcacf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Calendar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Meeting\",\r\n    \"description\": \"Test Meeting\",\r\n    \"startAt\": \"2022-07-04T09:03:01\",\r\n    \"endAt\": \"-07-04T10:03:01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{uri}}/calendars/624e5fe6249558adcfadcacf",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"calendars",
+								"624e5fe6249558adcfadcacf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Calendar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{uri}}/calendars/624e5fe6249558adcfadcacf",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"calendars",
+								"624e5fe6249558adcfadcacf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Calendar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Meeting\",\r\n    \"description\": \"Test Meeting\",\r\n    \"startAt\": \"2022-07-04T09:03:01\",\r\n    \"endAt\": \"2022-07-04T10:03:01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{uri}}/calendars/624e5fe6249558adcfadcacf",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"calendars",
+								"624e5fe6249558adcfadcacf"
 							]
 						}
 					},

@@ -1,10 +1,10 @@
-import { object, string } from "yup";
+import { object, string, array } from "yup";
 
 const payload = {
   body: object({
     patientName: string().required("Patient name is required"),
     patientDob: string(),
-    calendarId: string().required("Calendar not found !!!"),
+    calendarIds: array().min(1).required(),
     patientPhone: string().required("Patient Phone is required"),
     refererDoctor: string(),
   }),

@@ -9,7 +9,7 @@ export interface PatientDocument extends mongoose.Document {
   patientDob: Date;
   patientPhone: string;
   refererDoctor: string;
-  calendarId: CalendarDocument["_id"];
+  calendarIds: [string];
   userId: UserDocument["_id"];
   createdAt: Date;
   updatedAt: Date;
@@ -24,7 +24,7 @@ const PatientSchema = new mongoose.Schema(
       default: () => nanoid(20),
     },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    calendarId: { type: mongoose.Schema.Types.ObjectId, ref: "Calendar" },
+    calendarIds: { type: [String] },
     patientName: { type: String },
     patientPhone: { type: String },
     refererDoctor: { type: String },

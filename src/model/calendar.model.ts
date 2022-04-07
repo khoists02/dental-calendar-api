@@ -26,7 +26,7 @@ const CalendarSchema = new mongoose.Schema(
     },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     group: { type: mongoose.Schema.Types.ObjectId, ref: "Group" },
-    title: { type: String },
+    title: { type: String, required: true },
     description: { type: String },
     status: { type: String, default: "PENDING" },
     startAt: { type: Date },

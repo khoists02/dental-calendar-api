@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { omit } from "lodash";
-import { createUser } from "../services/user.service";
+import { createUser, findUser } from "../services/user.service";
 import log from "../logger";
 
 export async function createUserHandler(req: Request, res: Response) {

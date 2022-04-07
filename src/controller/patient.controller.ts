@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { get } from "lodash";
+import { findCalendar } from "../services/calendar.service";
 import {
   createPatient,
   findPatient,
@@ -25,6 +26,17 @@ export async function updatePatientHandler(req: Request, res: Response) {
   const patientId = get(req, "params.patientId");
   const update = req.body;
 
+  const calendarIds: Array<string> = update.calendarIds;
+  console.log({ calendarIds });
+
+  calendarIds.forEach(async (calendar) => {
+    const exitsCalendar = await findCalendar({ calendarId: calendar });
+    if (!exitsCalendar) {
+      console.log("Not Found Calendar !!!");
+      return res.sendStatus(404);
+    }
+  });
+
   const patient = await findPatient({ patientId });
 
   if (!patient) {
@@ -34,7 +46,7 @@ export async function updatePatientHandler(req: Request, res: Response) {
   if (String(patient.userId) !== userId) {
     return res.sendStatus(401);
   }
-
+  return;
   const updatePatient = await findAndUpdate({ patientId }, update, {
     new: true,
   });
