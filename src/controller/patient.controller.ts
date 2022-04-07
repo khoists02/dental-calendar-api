@@ -13,6 +13,16 @@ export async function createPatientHandler(req: Request, res: Response) {
   const userId = get(req, "user._id");
   const body = req.body;
 
+  const calendarIds: Array<string> = update.calendarIds;
+
+  calendarIds.forEach(async (calendar) => {
+    const exitsCalendar = await findCalendar({ calendarId: calendar });
+    if (!exitsCalendar) {
+      console.log("Not Found Calendar !!!");
+      return res.sendStatus(404);
+    }
+  });
+
   const patient = await createPatient({
     ...body,
     userId,
@@ -27,7 +37,6 @@ export async function updatePatientHandler(req: Request, res: Response) {
   const update = req.body;
 
   const calendarIds: Array<string> = update.calendarIds;
-  console.log({ calendarIds });
 
   calendarIds.forEach(async (calendar) => {
     const exitsCalendar = await findCalendar({ calendarId: calendar });
