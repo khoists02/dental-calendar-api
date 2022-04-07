@@ -13,7 +13,7 @@ export async function createPatientHandler(req: Request, res: Response) {
   const userId = get(req, "user._id");
   const body = req.body;
 
-  const calendarIds: Array<string> = update.calendarIds;
+  const calendarIds: Array<string> = body.calendarIds;
 
   calendarIds.forEach(async (calendar) => {
     const exitsCalendar = await findCalendar({ calendarId: calendar });
@@ -41,7 +41,6 @@ export async function updatePatientHandler(req: Request, res: Response) {
   calendarIds.forEach(async (calendar) => {
     const exitsCalendar = await findCalendar({ calendarId: calendar });
     if (!exitsCalendar) {
-      console.log("Not Found Calendar !!!");
       return res.sendStatus(404);
     }
   });
@@ -55,7 +54,6 @@ export async function updatePatientHandler(req: Request, res: Response) {
   if (String(patient.userId) !== userId) {
     return res.sendStatus(401);
   }
-  return;
   const updatePatient = await findAndUpdate({ patientId }, update, {
     new: true,
   });
