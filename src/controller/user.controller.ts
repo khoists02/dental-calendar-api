@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { get, omit } from "lodash";
 import { createUser, findUser } from "../services/user.service";
 import log from "../logger";
@@ -12,6 +12,20 @@ export async function createUserHandler(req: Request, res: Response) {
     return res.status(409).send(e.message);
   }
 }
+
+export const logoutHandler = async (req: Request, res: Response) => {
+  try {
+    // @ts-ignore
+    req.headers.authorization = undefined;
+    // @ts-ignore
+    req.headers["x-refresh"] = undefined;
+    // @ts-ignore
+    req.user = undefined;
+    return res.sendStatus(200);
+  } catch (error) {
+    log.error(error);
+  }
+};
 
 export async function authenticatedUserHandler(req: Request, res: Response) {
   try {
