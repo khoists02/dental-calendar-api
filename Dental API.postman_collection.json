@@ -1,0 +1,384 @@
+{
+	"info": {
+		"_postman_id": "1d98eec0-a89e-44c1-af86-a0c61d643ca3",
+		"name": "Dental API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Group",
+			"item": [
+				{
+					"name": "Get Groups",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{uri}}/groups",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Group",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"PENDING\",\r\n    \"groupName\": \"Nova Dental\",\r\n    \"active\": false,\r\n    \"number\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{uri}}/groups",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET GROUP",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{uri}}/groups/E4-DZMbVUu",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"groups",
+								"E4-DZMbVUu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE GROUP",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"TRIAL\",\r\n    \"groupName\": \"Phuonghoang dental\",\r\n    \"active\": false,\r\n    \"number\": 2,\r\n    \"expiredAt\": \"2022-10-02T10:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{uri}}/groups/E4-DZMbVUu",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"groups",
+								"E4-DZMbVUu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Group",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{uri}}/groups/FpfVbUtS9K",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"groups",
+								"FpfVbUtS9K"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Invited Users",
+			"item": [
+				{
+					"name": "Invited Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userIds\": [\"624bf61fcdbbd9457f9363b9\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{uri}}/userGroups/vv1B5PiXk4",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"userGroups",
+								"vv1B5PiXk4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sessions",
+			"item": [
+				{
+					"name": "Get Sessions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-refresh",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRiYjk3NzUyOTJjNGExZmE4ZDBmZmQiLCJlbWFpbCI6Imtob2kua2lvdG9AZ21haWwuY29tIiwibmFtZSI6Iktob2kgTEUiLCJjcmVhdGVkQXQiOiIyMDIyLTA0LTA1VDAzOjM3OjI3LjUxMFoiLCJ1cGRhdGVkQXQiOiIyMDIyLTA0LTA1VDAzOjM3OjI3LjUxMFoiLCJfX3YiOjAsInNlc3Npb24iOiI2MjRiYmEzYjU3NTBlZTI3ZjgxOWUwNTEiLCJpYXQiOjE2NDkxMzAwNDMsImV4cCI6MTY0OTEzMDk0M30.8hQp-HqepcyoE1HQjfXAcRvhvC6J6Y_5vRT2hjHBkDk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{uri}}/api/sessions",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"api",
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Session",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-refresh",
+								"value": "{{refreshToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{uri}}/sessions",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Session",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();\r",
+									"console.log(data)\r",
+									"pm.environment.set(\"accessToken\", data.accessToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"khoi.kioto@gmail.com\",\n    \"password\": \"minhkhoi9\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{uri}}/sessions",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"khoi1.kioto@gmail.com\",\n    \"password\": \"minhkhoi9\",\n    \"passwordConfirmation\": \"minhkhoi9\",\n    \"name\": \"Khoi LE1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{uri}}/users",
+							"host": [
+								"{{uri}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "email",
+			"value": "email"
+		}
+	]
+}
