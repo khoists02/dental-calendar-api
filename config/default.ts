@@ -1,7 +1,7 @@
 export default {
   port: 3000,
   host: "0.0.0.0",
-  dbUri: "mongodb://localhost:27017/dental",
+  dbUri: "mongodb://192.168.1.5:27017/dental",
   saltWorkFactor: 10,
   accessTokenTtl: "15m",
   refreshTokenTtl: "1y",
