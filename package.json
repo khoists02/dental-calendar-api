@@ -2,10 +2,12 @@
   "name": "dental-api",
   "version": "1.0.0",
   "description": "Build dental api ",
-  "main": "index.js",
+  "main": "src/app.js",
   "author": "Khoi LE",
   "license": "MIT",
   "scripts": {
+    "start": "NODE_PATH=./build node build/src/app.js",
+    "build": "tsc -p .",
     "dev": "nodemon src/app.ts"
   },
   "dependencies": {
