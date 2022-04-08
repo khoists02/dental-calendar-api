@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { get } from "lodash";
-import UserGroup from "../model/user_group.model";
 import {
   createGroup,
   findGroup,
@@ -8,21 +7,11 @@ import {
   deleteGroup,
   findGroups,
 } from "../services/group.service";
-import { createUserGroup, findUserGroup } from "../services/user_group.service";
 
 export async function createGroupHandler(req: Request, res: Response) {
   const userId = get(req, "user._id");
   const body = req.body;
-
-  const group = await createGroup({ ...body, user: userId });
-
-  const userGroupModel = new UserGroup({
-    userOwner: userId,
-    groupId: group.groupId,
-    userIds: [],
-  });
-
-  await createUserGroup(userGroupModel);
+  const group = await createGroup({ ...body, userOwner: userId });
   return res.send(group);
 }
 
@@ -37,19 +26,8 @@ export async function updateGroupHandler(req: Request, res: Response) {
     return res.sendStatus(404);
   }
 
-  if (String(group.user) !== userId) {
+  if (String(group.userOwner) !== userId) {
     return res.sendStatus(401);
-  }
-
-  const userGroup = await findUserGroup({ groupId });
-
-  // update number for group
-  if (userGroup) {
-    const number = userGroup?.userIds.length || 0;
-    update = {
-      ...update,
-      number,
-    };
   }
 
   const updatedGroup = await findAndUpdate({ groupId }, update, { new: true });
@@ -77,7 +55,7 @@ export async function deleteGroupHandler(req: Request, res: Response) {
     return res.sendStatus(404);
   }
 
-  if (String(group.user) !== String(userId)) {
+  if (String(group.userOwner) !== String(userId)) {
     return res.sendStatus(401);
   }
 

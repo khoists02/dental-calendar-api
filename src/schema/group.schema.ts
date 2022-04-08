@@ -1,12 +1,8 @@
-import { object, string, bool, number } from "yup";
+import { object, string } from "yup";
 
 const payload = {
   body: object({
     groupName: string().required("GroupName is required"),
-    status: string().required("Status is required").default("TRIAL"),
-    active: bool(),
-    expiredAt: string(),
-    number: number(),
   }),
 };
 

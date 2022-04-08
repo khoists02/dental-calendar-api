@@ -5,11 +5,7 @@ import { nanoid } from "nanoid";
 export interface GroupDocument extends mongoose.Document {
   groupId: string;
   groupName: string;
-  user: UserDocument["_id"];
-  active: boolean;
-  expiredAt: string;
-  status: "ACTIVATED" | "EXPIRED" | "TRIAL";
-  number: number;
+  userOwner: UserDocument["_id"];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -22,12 +18,8 @@ const GroupSchema = new mongoose.Schema(
       unique: true,
       default: () => nanoid(10),
     },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    userOwner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     groupName: { type: String, required: true, unique: true },
-    active: { type: Boolean, default: false },
-    status: { type: String, default: "TRIAL" },
-    expiredAt: { type: String },
-    number: { type: Number },
   },
   { timestamps: true }
 );
