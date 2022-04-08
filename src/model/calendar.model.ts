@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { UserDocument } from "./user.model";
 import { GroupDocument } from "./group.model";
 import { nanoid } from "nanoid";
+import { PatientDocument } from "./patient.model";
 
 export interface CalendarDocument extends mongoose.Document {
   calendarId: string;
@@ -10,6 +11,7 @@ export interface CalendarDocument extends mongoose.Document {
   title: string;
   description: string;
   status: "PENDING" | "REJECT" | "DONE";
+  patientId: string;
   startAt: Date;
   endAt: Date;
   createdAt: Date;
@@ -26,6 +28,7 @@ const CalendarSchema = new mongoose.Schema(
     },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     group: { type: mongoose.Schema.Types.ObjectId, ref: "Group" },
+    patientId: { type: String },
     title: { type: String, required: true },
     description: { type: String },
     status: { type: String, default: "PENDING" },

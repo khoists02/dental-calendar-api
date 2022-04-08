@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import { nanoid } from "nanoid";
-import { CalendarDocument } from "./calendar.model";
 import { UserDocument } from "./user.model";
 
 export interface PatientDocument extends mongoose.Document {
@@ -9,8 +8,8 @@ export interface PatientDocument extends mongoose.Document {
   patientDob: Date;
   patientPhone: string;
   refererDoctor: string;
-  calendarIds: [string];
   userId: UserDocument["_id"];
+  groupId: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -23,8 +22,8 @@ const PatientSchema = new mongoose.Schema(
       unique: true,
       default: () => nanoid(20),
     },
+    groupId: { type: String, required: true },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    calendarIds: { type: [String] },
     patientName: { type: String },
     patientPhone: { type: String },
     refererDoctor: { type: String },
