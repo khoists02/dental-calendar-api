@@ -7,7 +7,7 @@ services:
     ports:
       - "27017:27017"
 
-  ts-node-docker:
+  dental-api:
     build:
       context: .
       dockerfile: Dockerfile
@@ -15,9 +15,9 @@ services:
     volumes:
       - ./src:/home/node/app/src
       - ./nodemon.json:/home/node/app/nodemon.json
-    container_name: ts-node-docker
+    container_name: dental-api
     expose:
-      - '4000'
+      - '1337'
     ports:
-      - '4000:4000'
+      - '1337:1337'
     command: npm run dev
