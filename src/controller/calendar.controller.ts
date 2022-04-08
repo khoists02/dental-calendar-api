@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { get } from "lodash";
+import log from "../logger";
 import {
   createCalendar,
   findCalendar,
@@ -7,11 +8,19 @@ import {
   deleteCalendar,
   findCalendars,
 } from "../services/calendar.service";
+import { findPatient } from "../services/patient.service";
 
 export async function createCalendarHandler(req: Request, res: Response) {
   const userId = get(req, "user._id");
   const groupId = get(req, "params.groupId");
   const body = req.body;
+
+  if (body.patientId) {
+    const patient = await findPatient({ patientId: body.patientId });
+    if (!patient) {
+      return res.sendStatus(400);
+    }
+  }
 
   const calendar = await createCalendar({
     ...body,
@@ -23,26 +32,40 @@ export async function createCalendarHandler(req: Request, res: Response) {
 }
 
 export async function updateCalendarHandler(req: Request, res: Response) {
-  const userId = get(req, "user._id");
-  const calendarId = get(req, "params.calendarId");
-  const groupId = get(req, "params.groupId");
-  const update = req.body;
+  try {
+    const userId = get(req, "user._id");
+    const calendarId = get(req, "params.calendarId");
+    const groupId = get(req, "params.groupId");
+    const update = req.body;
 
-  const calendar = await findCalendar({ calendarId });
+    const calendar = await findCalendar({ calendarId });
 
-  if (!calendar) {
-    return res.sendStatus(404);
+    if (!calendar) {
+      return res.sendStatus(404);
+    }
+
+    if (
+      String(calendar.user) !== userId &&
+      String(calendar.group) !== groupId
+    ) {
+      return res.sendStatus(401);
+    }
+
+    if (update.patientId) {
+      const patient = await findPatient({ patientId: update.patientId });
+      if (!patient) {
+        return res.sendStatus(404);
+      }
+    }
+
+    const updateCalendar = await findAndUpdate({ calendarId }, update, {
+      new: true,
+    });
+
+    return res.send(updateCalendar);
+  } catch (error) {
+    log.error(error);
   }
-
-  if (String(calendar.user) !== userId && String(calendar.group) !== groupId) {
-    return res.sendStatus(401);
-  }
-
-  const updateCalendar = await findAndUpdate({ calendarId }, update, {
-    new: true,
-  });
-
-  return res.send(updateCalendar);
 }
 export async function getCalendarHandler(req: Request, res: Response) {
   const groupId = get(req, "params.groupId");

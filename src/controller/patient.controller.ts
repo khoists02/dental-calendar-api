@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { get } from "lodash";
+import log from "../logger";
 import { findCalendar } from "../services/calendar.service";
+import { findGroup } from "../services/group.service";
 import {
   createPatient,
   findPatient,
@@ -10,40 +12,30 @@ import {
 } from "../services/patient.service";
 
 export async function createPatientHandler(req: Request, res: Response) {
-  const userId = get(req, "user._id");
-  const body = req.body;
+  try {
+    const userId = get(req, "user._id");
+    const body = req.body;
 
-  const calendarIds: Array<string> = body.calendarIds;
-
-  calendarIds.forEach(async (calendar) => {
-    const exitsCalendar = await findCalendar({ calendarId: calendar });
-    if (!exitsCalendar) {
-      console.log("Not Found Calendar !!!");
-      return res.sendStatus(404);
+    const group = await findGroup({ groupId: body.groupId });
+    if (!group) {
+      return res.sendStatus(400);
     }
-  });
 
-  const patient = await createPatient({
-    ...body,
-    userId,
-  });
+    const patient = await createPatient({
+      ...body,
+      userId,
+    });
 
-  return res.send(patient);
+    return res.send(patient);
+  } catch (error) {
+    log.error(error);
+  }
 }
 
 export async function updatePatientHandler(req: Request, res: Response) {
   const userId = get(req, "user._id");
   const patientId = get(req, "params.patientId");
   const update = req.body;
-
-  const calendarIds: Array<string> = update.calendarIds;
-
-  calendarIds.forEach(async (calendar) => {
-    const exitsCalendar = await findCalendar({ calendarId: calendar });
-    if (!exitsCalendar) {
-      return res.sendStatus(404);
-    }
-  });
 
   const patient = await findPatient({ patientId });
 

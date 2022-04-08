@@ -4,7 +4,7 @@ const payload = {
   body: object({
     patientName: string().required("Patient name is required"),
     patientDob: string(),
-    calendarIds: array().min(1).required(),
+    groupId: string().required("Group is required."),
     patientPhone: string().required("Patient Phone is required"),
     refererDoctor: string(),
   }),
