@@ -1,8 +1,9 @@
-import { object, string } from "yup";
+import { array, object, string } from "yup";
 
 const payload = {
   body: object({
     groupName: string().required("GroupName is required"),
+    userIds: array(),
   }),
 };
 
