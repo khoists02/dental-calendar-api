@@ -7,6 +7,7 @@ import {
   deleteGroup,
   findGroups,
 } from "../services/group.service";
+import { NotFound, UnAuthorize } from "../utils/http.error";
 
 export async function createGroupHandler(req: Request, res: Response) {
   const userId = get(req, "user._id");
@@ -23,11 +24,11 @@ export async function updateGroupHandler(req: Request, res: Response) {
   const group = await findGroup({ groupId });
 
   if (!group) {
-    return res.sendStatus(404);
+    return NotFound("Group is not found", res);
   }
 
   if (String(group.userOwner) !== userId) {
-    return res.sendStatus(401);
+    return UnAuthorize(res);
   }
 
   const updatedGroup = await findAndUpdate({ groupId }, update, { new: true });
@@ -39,7 +40,7 @@ export async function getGroupHandler(req: Request, res: Response) {
   const group = await findGroup({ groupId });
 
   if (!group) {
-    return res.sendStatus(404);
+    return NotFound("Group is not found", res);
   }
 
   return res.send(group);
@@ -52,11 +53,11 @@ export async function deleteGroupHandler(req: Request, res: Response) {
   const group = await findGroup({ groupId });
 
   if (!group) {
-    return res.sendStatus(404);
+    return NotFound("Group is not found", res);
   }
 
   if (String(group.userOwner) !== String(userId)) {
-    return res.sendStatus(401);
+    return UnAuthorize(res);
   }
 
   await deleteGroup({ groupId });

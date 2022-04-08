@@ -10,6 +10,7 @@ import {
   deletePatient,
   findPatients,
 } from "../services/patient.service";
+import { NotFound, UnAuthorize } from "../utils/http.error";
 
 export async function createPatientHandler(req: Request, res: Response) {
   try {
@@ -18,7 +19,7 @@ export async function createPatientHandler(req: Request, res: Response) {
 
     const group = await findGroup({ groupId: body.groupId });
     if (!group) {
-      return res.sendStatus(400);
+      return NotFound("Group is not found", res);
     }
 
     const patient = await createPatient({
@@ -40,11 +41,11 @@ export async function updatePatientHandler(req: Request, res: Response) {
   const patient = await findPatient({ patientId });
 
   if (!patient) {
-    return res.sendStatus(404);
+    return NotFound("Patient is not found", res);
   }
 
   if (String(patient.userId) !== userId) {
-    return res.sendStatus(401);
+    return UnAuthorize(res);
   }
   const updatePatient = await findAndUpdate({ patientId }, update, {
     new: true,
@@ -57,7 +58,7 @@ export async function getPatientHandler(req: Request, res: Response) {
   const patient = await findPatient({ patientId });
 
   if (!patient) {
-    return res.sendStatus(404);
+    return NotFound("Patient is not found", res);
   }
 
   return res.send(patient);
@@ -70,11 +71,11 @@ export async function deletePatientHandler(req: Request, res: Response) {
   const patient = await findPatient({ patientId });
 
   if (!patient) {
-    return res.sendStatus(404);
+    return NotFound("Patient is not found", res);
   }
 
   if (String(patient.userId) !== String(userId)) {
-    return res.sendStatus(401);
+    return UnAuthorize(res);
   }
 
   await deletePatient({ patientId });
